@@ -48,7 +48,7 @@ function getRates(date) {
             }
         });
 
-        setRates('rates');   
+        setRates('rates')
     })
     document.querySelector('.dateBlock .currDate').textContent = convertDate(date);
 }
@@ -85,12 +85,13 @@ function getPrevRates(date) {
         setRates('ratesPrev');
     })
     document.querySelector('.dateBlock .prevDate').textContent = convertDate(date);
+
 }
 
 getPrevRates(prevDay);
 
 const converterBlock = document.querySelector('.converter');
-let eventTarget;
+let eventTarget = document.querySelector('.currencyBlock input');
 let eventTargetValue;
 converterBlock.addEventListener('input', function(event) {
     eventTarget = event.target;
@@ -115,7 +116,7 @@ converterBlock.addEventListener('dblclick', function(event) {
 function updateResults(target, value) {
     inputs.forEach(elem => {
         if (elem != target) {
-            let newValue = value * (currencies[target.id] / currencies[elem.id]); 
+            let newValue = value * (currencies[target.id] / currencies[elem.id]);
             elem.value = roundToTwo(newValue);
         }
     })
@@ -140,6 +141,7 @@ datePicker.addEventListener('input', function(event){
     } else {
         datePicker.classList.remove('red');
     }
+        
 })
 
 const header = document.querySelector('.widgetHeader');
@@ -147,7 +149,9 @@ header.addEventListener('click', function(event) {
    
     const ref = event.target.getAttribute('data-ref');
     if (ref !== 'date') {
+        
         if (datePicker.value >= startDate && datePicker.value <= today) {
+            
             let temp = getPrevDate(datePicker.value);
             getRates(datePicker.value);
             getPrevRates(temp);
@@ -157,13 +161,14 @@ header.addEventListener('click', function(event) {
             datePicker.value = today;
             datePicker.classList.remove('red');
         }
-       if(eventTarget.classList.contains('red')) {
+        if(eventTarget.classList.contains('red')) {
             inputs.forEach(elem => elem.value = '');
             eventTarget.classList.remove('red');
+            eventTargetValue = 0;
         }
         document.querySelector('.converterFooter').textContent = convertDate(datePicker.value);
     }
-    
+
     document.querySelectorAll('.widgetBody>div').forEach(elem => elem.classList.add('hidden'));
     document.querySelector(`.${ref}`).classList.remove('hidden');
     header.querySelectorAll('div').forEach(elem => elem.classList.remove('active'));
