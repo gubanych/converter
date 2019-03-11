@@ -48,7 +48,8 @@ function getRates(date) {
             }
         });
 
-        setRates('rates')
+        setRates('rates');
+        if(eventTarget && eventTargetValue) updateResults(eventTarget, eventTargetValue);
     })
     document.querySelector('.dateBlock .currDate').textContent = convertDate(date);
 }
@@ -114,6 +115,7 @@ converterBlock.addEventListener('dblclick', function(event) {
  inputs.push(document.getElementById('BYR'));
 
 function updateResults(target, value) {
+
     inputs.forEach(elem => {
         if (elem != target) {
             let newValue = value * (currencies[target.id] / currencies[elem.id]);
@@ -155,7 +157,7 @@ header.addEventListener('click', function(event) {
             let temp = getPrevDate(datePicker.value);
             getRates(datePicker.value);
             getPrevRates(temp);
-            if(eventTarget && eventTargetValue) updateResults(eventTarget, eventTargetValue);
+            
         }
         else {
             datePicker.value = today;
